@@ -29,7 +29,7 @@ export const InputContent = styled.div<IInputContentProps>`
     `}
 
   input {
-    flex: 1;
+    width: 100%;
     background: transparent;
     border: 0;
     color: #002859;
