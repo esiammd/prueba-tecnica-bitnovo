@@ -17,5 +17,7 @@ export const Container = styled.button`
 
   &:disabled {
     background: #c6dffe;
+    opacity: 1;
+    cursor: auto;
   }
 `;
