@@ -26,23 +26,21 @@ export const Info = styled.div`
     }
   }
 
-  span {
-    &:last-child {
-      border: 1px solid #647184;
-      border-radius: 4px 4px 4px 0px;
-      padding: 2px;
+  span:last-child {
+    border: 1px solid #647184;
+    border-radius: 4px 4px 4px 0px;
+    padding: 2px;
 
-      position: relative;
-      top: -18px;
+    position: relative;
+    top: -18px;
 
-      font-size: 12px;
-      font-weight: 400;
-      color: #647184;
+    font-size: 12px;
+    font-weight: 400;
+    color: #647184;
 
-      opacity: 0;
-      transition: opacity 0.4s;
-      visibility: hidden;
-    }
+    opacity: 0;
+    transition: opacity 0.4s;
+    visibility: hidden;
   }
 
   &:hover span {
