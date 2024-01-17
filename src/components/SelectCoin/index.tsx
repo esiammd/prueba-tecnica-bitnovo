@@ -1,5 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useRef } from 'react';
 import { FiX, FiChevronRight } from 'react-icons/fi';
 import { FaCircleCheck } from 'react-icons/fa6';
 import { Form } from '@unform/web';
@@ -25,6 +24,10 @@ import {
   CoinName,
 } from './styles';
 
+interface ISelectCoinProps {
+  closeComponent: () => void;
+}
+
 interface ICoinsProps {
   icon: string;
   name: string;
@@ -36,9 +39,8 @@ interface IFormData {
   search: string;
 }
 
-const SelectCoin: React.FC = () => {
+const SelectCoin: React.FC<ISelectCoinProps> = ({ closeComponent }) => {
   const formRef = useRef<FormHandles>(null);
-  const navigate = useNavigate();
 
   const coins: ICoinsProps[] = [
     {
@@ -79,10 +81,6 @@ const SelectCoin: React.FC = () => {
     },
   ];
 
-  const handleNavigateToHome = useCallback(() => {
-    navigate('/');
-  }, [navigate]);
-
   const handleSubmitForm = useCallback(async (data: IFormData) => {
     console.log(data);
   }, []);
@@ -96,7 +94,11 @@ const SelectCoin: React.FC = () => {
       <Content>
         <Header>
           <Title>Seleccionar criptomoneda</Title>
-          <button onClick={handleNavigateToHome}>
+          <button
+            onClick={() => {
+              closeComponent();
+            }}
+          >
             <FiX size={22} color="#002859" />
           </button>
         </Header>
