@@ -5,8 +5,8 @@ import { FaCircleCheck } from 'react-icons/fa6';
 import { Form } from '@unform/web';
 import { type FormHandles } from '@unform/core';
 
-import Search from '../../components/Search';
-import Footer from '../../components/Footer';
+import Search from '../Search';
+import Footer from '../Footer';
 
 import bitcoinImg from '../../assets/coins/bitcoin.svg';
 import ethereumImg from '../../assets/coins/ethereum.svg';
@@ -39,7 +39,6 @@ interface IFormData {
 const SelectCoin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const navigate = useNavigate();
-  const [coinSelected, setcoinSelected] = useState('');
 
   const coins: ICoinsProps[] = [
     {
