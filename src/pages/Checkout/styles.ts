@@ -11,4 +11,32 @@ export const Container = styled.div`
 export const Content = styled.div`
   display: flex;
   align-items: start;
+
+  @media (max-width: 1300px) {
+    height: calc(100vh - 200px);
+    padding: 20px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+
+    div {
+      margin-right: 0;
+    }
+
+    div:first-child {
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    width: 483px;
+  }
+
+  @media (max-width: 680px) {
+    width: 383px;
+  }
+
+  @media (max-width: 580px) {
+    width: 350px;
+  }
 `;

@@ -3,6 +3,10 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 583px;
   margin-right: 32px;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.span`
@@ -28,6 +32,10 @@ export const Content = styled.div`
     font-weight: 600;
 
     color: #002859;
+
+    @media (max-width: 900px) {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -35,6 +43,10 @@ export const Amount = styled.div`
   span {
     font-size: 18px;
     font-weight: 700;
+
+    @media (max-width: 900px) {
+      font-size: 16px;
+    }
   }
 `;
 

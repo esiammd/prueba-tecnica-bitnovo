@@ -7,6 +7,10 @@ interface ITypeProps {
 export const Container = styled.div`
   width: 583px;
   margin-right: 32px;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.span`
@@ -32,7 +36,7 @@ export const Content = styled.div`
   box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.4);
 `;
 
-export const Timer = styled.div`
+export const Timer = styled.span`
   display: flex;
   align-items: center;
 
@@ -61,6 +65,7 @@ export const Type = styled.div<ITypeProps>`
     height: 32px;
     padding: 6px 12px;
     border-radius: 100px;
+    border: none;
 
     font-size: 16px;
     background: #f9fafc;
@@ -135,6 +140,10 @@ export const Key = styled.span`
     font-weight: 600;
     text-align: center;
     word-break: break-word;
+
+    @media (max-width: 900px) {
+      width: 200px;
+    }
   }
 `;
 
