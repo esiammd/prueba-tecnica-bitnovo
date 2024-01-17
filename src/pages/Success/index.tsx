@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 
-import successImg from '../../assets/success.svg';
+import successImg from '../../assets/icons/success.svg';
 
 import { Container, Content, Title, Description } from './styles';
 

@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import canceledImg from '../../assets/canceled.svg';
-
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
+
+import canceledImg from '../../assets/icons/canceled.svg';
 
 import { Container, Content, Title, Description } from './styles';
 
