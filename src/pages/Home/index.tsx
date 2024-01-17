@@ -8,8 +8,12 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import maskAmount from '../../utils/maskAmount';
 
 import Input from '../../components/Input';
+import Select from '../../components/Select';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
+import SelectCoin from '../../components/SelectCoin';
+
+import bitcoinImg from '../../assets/coins/bitcoin.svg';
 
 import { Container, Title } from './styles';
 
@@ -22,6 +26,7 @@ interface IFormData {
 const Home: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const [isFormCompleted, setIsFormCompleted] = useState(false);
+  const [showCoinSelector, setShowCoinSelector] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmitForm = useCallback(
@@ -67,33 +72,48 @@ const Home: React.FC = () => {
     );
   }, []);
 
+  const handleShowCoinSelector = useCallback(() => {
+    setShowCoinSelector(!showCoinSelector);
+  }, [showCoinSelector]);
+
   return (
     <Container>
-      <Form
-        ref={formRef}
-        onSubmit={handleSubmitForm}
-        onChange={handleChangeForm}
-      >
-        <Title>Crear pago</Title>
+      {!showCoinSelector ? (
+        <Form
+          ref={formRef}
+          onSubmit={handleSubmitForm}
+          onChange={handleChangeForm}
+        >
+          <Title>Crear pago</Title>
 
-        <Input
-          name="amount"
-          label="Importe a pagar"
-          placeholder="Añade importe a pagar"
-        />
+          <Input
+            name="amount"
+            label="Importe a pagar"
+            placeholder="Añade importe a pagar"
+          />
 
-        <Input name="coin" label="Seleccionar moneda" />
+          <Select
+            name="coin"
+            label="Seleccionar moneda"
+            onClick={handleShowCoinSelector}
+          >
+            <img src={bitcoinImg} alt="Bitcoin" />
+            Bitcoin
+          </Select>
 
-        <Input
-          name="description"
-          label="Concepto"
-          placeholder="Añade descripción del pago"
-        />
+          <Input
+            name="description"
+            label="Concepto"
+            placeholder="Añade descripción del pago"
+          />
 
-        <Button type="submit" disabled={!isFormCompleted}>
-          Continuar
-        </Button>
-      </Form>
+          <Button type="submit" disabled={!isFormCompleted}>
+            Continuar
+          </Button>
+        </Form>
+      ) : (
+        <SelectCoin closeComponent={handleShowCoinSelector} />
+      )}
 
       <Footer />
     </Container>
