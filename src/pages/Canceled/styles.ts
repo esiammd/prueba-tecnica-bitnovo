@@ -26,7 +26,8 @@ export const Content = styled.div`
   box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.4);
 
   @media (max-width: 650px) {
-    width: auto;
+    width: 300px;
+    height: auto;
   }
 `;
 
@@ -43,7 +44,7 @@ export const Description = styled.span`
   text-align: center;
   margin-bottom: 45.5px;
 
-  @media (max-width: 450px) {
-    width: auto;
+  @media (max-width: 650px) {
+    width: 250px;
   }
 `;
