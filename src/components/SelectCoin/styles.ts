@@ -41,6 +41,7 @@ export const Header = styled.div`
   margin-bottom: 16px;
 
   button {
+    display: flex;
     border: none;
     background: none;
   }
