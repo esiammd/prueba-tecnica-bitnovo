@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from 'react';
 
-import Button from '../Button';
-
 import timeImg from '../../assets/icons/timer.svg';
 import copyImg from '../../assets/icons/copy.svg';
 import warningImg from '../../assets/icons/warning.svg';
@@ -39,22 +37,22 @@ const Payment: React.FC = () => {
 
         <QRCode>
           <Type $qrCodeType={qrCodeType}>
-            <Button
+            <button
               className="smart"
               onClick={() => {
                 handleQRCodeType('smart');
               }}
             >
               Smart QR
-            </Button>
-            <Button
+            </button>
+            <button
               className="web"
               onClick={() => {
                 handleQRCodeType('web');
               }}
             >
               Web3
-            </Button>
+            </button>
           </Type>
 
           <QRCodeImg />

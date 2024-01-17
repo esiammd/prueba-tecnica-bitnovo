@@ -52,11 +52,11 @@ export const Type = styled.div<ITypeProps>`
   font-size: 14px;
   margin-bottom: 32px;
 
-  Button:first-child {
+  button:first-child {
     margin-right: 16px;
   }
 
-  Button {
+  button {
     width: auto;
     height: 32px;
     padding: 6px 12px;
