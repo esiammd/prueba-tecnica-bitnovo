@@ -1,11 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import {
-  useForm,
-  type SubmitHandler,
-  type RegisterOptions,
-} from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import formatCurrency from '../utils/formatCurrency';
 import { type ICoinProps, coins } from '../utils/coins';
@@ -37,15 +33,8 @@ const Home: React.FC = () => {
   const router = useRouter();
 
   const registerWithInnerRef = useCallback(
-    (
-      name: keyof IFormData,
-      options?: RegisterOptions<IFormData, keyof IFormData>,
-    ) => {
-      const {
-        ref: innerRef,
-        onBlur,
-        ...registerResult
-      } = register(name, options);
+    (...args: Parameters<typeof register>) => {
+      const { ref: innerRef, ...registerResult } = register(...args);
       return { innerRef, ...registerResult };
     },
     [register],
@@ -98,7 +87,7 @@ const Home: React.FC = () => {
               label="Seleccionar moneda"
               image={getValues().coin.image}
               onClick={handleShowCoinSelector}
-              {...registerWithInnerRef('coin', { required: true })}
+              {...registerWithInnerRef('coin.name', { required: true })}
             />
 
             <Input
