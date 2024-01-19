@@ -47,10 +47,10 @@ const Select: React.FC<IInputProps> = ({ label, image, innerRef, ...rest }) => {
         <Image src={image} alt="Icono" width={20} height={20} />
 
         <input
+          {...rest}
+          ref={innerRef}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
-          ref={innerRef}
-          {...rest}
         />
 
         <FiChevronDown size={16} color={isFocused ? '#002859' : '#647184'} />

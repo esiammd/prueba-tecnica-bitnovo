@@ -38,10 +38,10 @@ const Input: React.FC<IInputProps> = ({
         {Icon && <Icon size={20} color={isFocused ? '#002859' : '#647184'} />}
 
         <input
+          {...rest}
+          ref={innerRef}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
-          ref={innerRef}
-          {...rest}
         />
       </InputContent>
     </Container>
