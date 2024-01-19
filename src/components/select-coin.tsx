@@ -2,11 +2,7 @@ import React, { useCallback } from 'react';
 import { FiX, FiChevronRight, FiSearch } from 'react-icons/fi';
 import { FaCircleCheck } from 'react-icons/fa6';
 import Image from 'next/image';
-import {
-  useForm,
-  type SubmitHandler,
-  type RegisterOptions,
-} from 'react-hook-form';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { type ICoinProps, coins } from '../utils/coins';
 
@@ -43,15 +39,8 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
   });
 
   const registerWithInnerRef = useCallback(
-    (
-      name: keyof IFormData,
-      options?: RegisterOptions<IFormData, keyof IFormData>,
-    ) => {
-      const {
-        ref: innerRef,
-        onBlur,
-        ...registerResult
-      } = register(name, options);
+    (...args: Parameters<typeof register>) => {
+      const { ref: innerRef, ...registerResult } = register(...args);
       return { innerRef, ...registerResult };
     },
     [register],
