@@ -4,7 +4,7 @@ import { FaCircleCheck } from 'react-icons/fa6';
 import Image from 'next/image';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
-import { type ICoinProps, coins } from '../utils/coins';
+import { type ICoinProps } from '../pages/index';
 
 import {
   Container,
@@ -18,7 +18,8 @@ import {
 import Input from './input';
 
 interface ISelectCoinProps {
-  selectItem: ICoinProps;
+  coins: ICoinProps[];
+  selectCoin: string;
   changeItem: (coin: ICoinProps) => void;
   closeComponent: () => void;
 }
@@ -28,7 +29,8 @@ export interface IFormData {
 }
 
 const SelectCoin: React.FC<ISelectCoinProps> = ({
-  selectItem,
+  coins,
+  selectCoin,
   changeItem,
   closeComponent,
 }) => {
@@ -93,11 +95,11 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
               <Image src={coin.image} alt={coin.name} width={32} height={32} />
               <div>
                 <span>{coin.name}</span>
-                <span>{coin.acronym}</span>
+                <span>{coin.symbol}</span>
               </div>
             </CoinName>
 
-            {coin.name === selectItem.name ? (
+            {coin.name === selectCoin ? (
               <FaCircleCheck size={16} color="#71B0FD" />
             ) : (
               <FiChevronRight size={16} color="#647184" />

@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
+import { type GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import formatCurrency from '../utils/formatCurrency';
-import { type ICoinProps, coins } from '../utils/coins';
 
 import Input from '../components/input';
 import Select from '../components/select';
@@ -20,7 +20,20 @@ interface IFormData {
   description: string;
 }
 
-const Home: React.FC = () => {
+export interface ICoinProps {
+  symbol: string;
+  name: string;
+  min_amount: string;
+  max_amount: string;
+  image: string;
+  blockchain: string;
+}
+
+interface IHomeProps {
+  coins: ICoinProps[];
+}
+
+const Home: React.FC<IHomeProps> = ({ coins }) => {
   const { handleSubmit, register, setValue, getValues, formState } =
     useForm<IFormData>({
       defaultValues: {
@@ -61,7 +74,13 @@ const Home: React.FC = () => {
   const handleSubmitForm: SubmitHandler<IFormData> = useCallback(
     async (data: IFormData) => {
       console.log(data);
-      router.push('/checkout');
+      router.push(
+        {
+          pathname: '/checkout',
+          query: { order: JSON.stringify(data) },
+        },
+        '/checkout',
+      );
     },
     [router],
   );
@@ -102,7 +121,8 @@ const Home: React.FC = () => {
           </Form>
         ) : (
           <SelectCoin
-            selectItem={getValues().coin}
+            coins={coins}
+            selectCoin={getValues().coin.name}
             changeItem={handleItemCoinSelector}
             closeComponent={handleShowCoinSelector}
           />
@@ -112,6 +132,26 @@ const Home: React.FC = () => {
       </Container>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
+  const headers = new Headers({
+    'X-Device-Id': `${process.env.API_KEY}`,
+  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/currencies`,
+    {
+      headers,
+    },
+  );
+
+  const coins = await response.json();
+
+  return {
+    props: {
+      coins,
+    },
+  };
 };
 
 export default Home;
