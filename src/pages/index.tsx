@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import formatCurrency from '../utils/formatCurrency';
+import api from '../services/api';
 
 import Input from '../components/input';
 import Select from '../components/select';
@@ -185,21 +186,11 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
 };
 
 export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
-  const headers = new Headers({
-    'X-Device-Id': `${process.env.API_KEY}`,
-  });
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/currencies`,
-    {
-      headers,
-    },
-  );
-
-  const coins = await response.json();
+  const response = await api.get('/currencies');
 
   return {
     props: {
-      coins,
+      coins: response.data,
     },
   };
 };
