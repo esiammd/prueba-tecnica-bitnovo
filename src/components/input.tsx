@@ -6,17 +6,24 @@ import React, {
 } from 'react';
 import { type IconBaseProps } from 'react-icons';
 
-import { Container, Title, InputContent } from '../styles/components/Input';
+import {
+  Container,
+  Title,
+  InputContent,
+  Error,
+} from '../styles/components/Input';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: React.ComponentType<IconBaseProps>;
+  error?: string;
   innerRef: LegacyRef<HTMLInputElement>;
 }
 
 const Input: React.FC<IInputProps> = ({
   label,
   icon: Icon,
+  error,
   innerRef,
   ...rest
 }) => {
@@ -34,7 +41,7 @@ const Input: React.FC<IInputProps> = ({
     <Container>
       <Title>{label}</Title>
 
-      <InputContent $isFocused={isFocused}>
+      <InputContent $isFocused={isFocused} $isError={!!error}>
         {Icon && <Icon size={20} color={isFocused ? '#002859' : '#647184'} />}
 
         <input
@@ -44,6 +51,8 @@ const Input: React.FC<IInputProps> = ({
           onBlur={handleInputBlur}
         />
       </InputContent>
+
+      {error && <Error>* {error}</Error>}
     </Container>
   );
 };

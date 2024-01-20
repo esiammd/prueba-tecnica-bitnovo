@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface IInputContentProps {
   $isFocused: boolean;
+  $isError: boolean;
 }
 
 export const Container = styled.div`
@@ -23,12 +24,6 @@ export const InputContent = styled.div<IInputContentProps>`
   padding: 18px 12px;
   margin-top: 4px;
 
-  ${props =>
-    props.$isFocused &&
-    css`
-      border-color: #002859;
-    `}
-
   svg {
     margin-right: 8px;
   }
@@ -43,4 +38,25 @@ export const InputContent = styled.div<IInputContentProps>`
       color: #647184;
     }
   }
+
+  ${props =>
+    props.$isFocused &&
+    css`
+      border-color: #002859;
+    `}
+
+  ${props =>
+    props.$isError &&
+    css`
+      border-color: #c53030;
+    `}
+`;
+
+export const Error = styled.span`
+  display: flex;
+  margin-top: 4px;
+  margin-bottom: -18px;
+
+  font-size: 12px;
+  color: #c53030;
 `;
