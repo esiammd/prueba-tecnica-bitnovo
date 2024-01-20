@@ -12,16 +12,24 @@ import {
   Title,
   Info,
   InputContent,
+  Error,
 } from '../styles/components/Select';
 import Image from 'next/image';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   image: string;
+  error?: string;
   innerRef: LegacyRef<HTMLInputElement>;
 }
 
-const Select: React.FC<IInputProps> = ({ label, image, innerRef, ...rest }) => {
+const Select: React.FC<IInputProps> = ({
+  label,
+  image,
+  error,
+  innerRef,
+  ...rest
+}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleInputFocus = useCallback(() => {
@@ -39,11 +47,14 @@ const Select: React.FC<IInputProps> = ({ label, image, innerRef, ...rest }) => {
 
         <Info>
           <FiInfo size={14} color="#647184" />
-          <span>criptomoneda</span>
+          <span>
+            Las criptodivisas que se podrán seleccionar varian en función del
+            importe a pagar.
+          </span>
         </Info>
       </ContentTitle>
 
-      <InputContent $isFocused={isFocused}>
+      <InputContent $isFocused={isFocused} $isError={!!error}>
         <Image src={image} alt="Icono" width={20} height={20} />
 
         <input
@@ -53,8 +64,10 @@ const Select: React.FC<IInputProps> = ({ label, image, innerRef, ...rest }) => {
           onBlur={handleInputBlur}
         />
 
-        <FiChevronDown size={16} color={isFocused ? '#002859' : '#647184'} />
+        <FiChevronDown size={16} color="#647184" />
       </InputContent>
+
+      {error && <Error>* {error}</Error>}
     </Container>
   );
 };

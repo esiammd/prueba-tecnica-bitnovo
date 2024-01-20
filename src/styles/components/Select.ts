@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface IInputContentProps {
   $isFocused: boolean;
+  $isError: boolean;
 }
 
 export const Container = styled.div`
@@ -32,10 +33,10 @@ export const Info = styled.div`
     }
   }
 
-  span:last-child {
+  span {
     border: 1px solid #647184;
     border-radius: 4px 4px 4px 0px;
-    padding: 2px;
+    padding: 4px;
 
     position: relative;
     top: -18px;
@@ -66,22 +67,12 @@ export const InputContent = styled.div<IInputContentProps>`
   padding: 18px 12px;
   margin-top: 4px;
 
-  ${props =>
-    props.$isFocused &&
-    css`
-      border-color: #002859;
-    `}
-
   img {
     margin-right: 8px;
   }
 
   svg {
     margin-right: 8px;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 
   input {
@@ -98,4 +89,43 @@ export const InputContent = styled.div<IInputContentProps>`
       cursor: pointer;
     }
   }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  ${props =>
+    props.$isFocused &&
+    css`
+      border-color: #002859;
+      svg {
+        color: #002859;
+      }
+    `}
+
+  ${props =>
+    props.$isError &&
+    css`
+      border-color: #c53030;
+      svg {
+        color: #c53030;
+      }
+
+      &:hover {
+        cursor: not-allowed;
+      }
+
+      &:hover input {
+        cursor: not-allowed;
+      }
+    `}
+`;
+
+export const Error = styled.span`
+  display: flex;
+  margin-top: 4px;
+  margin-bottom: -18px;
+
+  font-size: 12px;
+  color: #c53030;
 `;
