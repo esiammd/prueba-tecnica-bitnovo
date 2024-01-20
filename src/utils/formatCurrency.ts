@@ -1,6 +1,12 @@
 export default function formatCurrency(value: string): string {
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d)(\d{2})$/, '$1,$2')
-    .replace(/(?=(\d{3})+(\D))\B/g, '.');
+  const cleanValue = value.replace(/\D/g, '');
+
+  if (cleanValue === '') {
+    return cleanValue;
+  }
+
+  let currency = (parseInt(cleanValue) / 100).toFixed(2).toString();
+  currency = currency.replace('.', ',');
+  currency = currency.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+  return currency;
 }
