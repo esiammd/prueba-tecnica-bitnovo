@@ -36,6 +36,7 @@ interface IHomeProps {
 const Home: React.FC<IHomeProps> = ({ coins }) => {
   const { handleSubmit, register, setValue, getValues, formState } =
     useForm<IFormData>({
+      mode: 'onChange',
       defaultValues: {
         amount: '',
         coin: coins[0],
@@ -43,6 +44,7 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
       },
     });
   const [showCoinSelector, setShowCoinSelector] = useState(false);
+  const [filteredCoins, setFilteredCoins] = useState(coins);
   const router = useRouter();
 
   const registerWithInnerRef = useCallback(
@@ -51,13 +53,6 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
       return { innerRef, ...registerResult };
     },
     [register],
-  );
-
-  const handleAmountFormat = useCallback(
-    (event: React.FormEvent<HTMLInputElement>) => {
-      setValue('amount', formatCurrency(event.currentTarget.value));
-    },
-    [setValue],
   );
 
   const handleShowCoinSelector = useCallback(() => {
@@ -69,6 +64,36 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
       setValue('coin', coin);
     },
     [setValue],
+  );
+
+  const handleFilterCoins = useCallback(() => {
+    return coins.filter(
+      coin =>
+        Number.parseFloat(
+          getValues('amount').replaceAll('.', '').replaceAll(',', '.'),
+        ) >= Number.parseFloat(coin.min_amount) &&
+        Number.parseFloat(
+          getValues('amount').replaceAll('.', '').replaceAll(',', '.'),
+        ) <= Number.parseFloat(coin.max_amount),
+    );
+  }, [coins, getValues]);
+
+  const handleAmountFormat = useCallback(
+    (value: string) => {
+      setValue('amount', formatCurrency(value), { shouldValidate: true });
+    },
+    [setValue],
+  );
+
+  const handleAmountChange = useCallback(
+    (event: React.FormEvent<HTMLInputElement>) => {
+      handleAmountFormat(event.currentTarget.value);
+
+      getValues('amount') === ''
+        ? setFilteredCoins(coins)
+        : setFilteredCoins(handleFilterCoins());
+    },
+    [handleAmountFormat, handleFilterCoins, setFilteredCoins, coins, getValues],
   );
 
   const handleSubmitForm: SubmitHandler<IFormData> = useCallback(
@@ -98,21 +123,51 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
             <Input
               label="Importe a pagar"
               placeholder="Añade importe a pagar"
-              onKeyUp={handleAmountFormat}
-              {...registerWithInnerRef('amount', { required: true, min: 0 })}
+              error={formState.errors.amount?.message}
+              {...registerWithInnerRef('amount', {
+                required: 'Campo obligatorio.',
+                onChange: handleAmountChange,
+                validate: {
+                  minValue: value =>
+                    Number.parseFloat(
+                      (value as string)
+                        .replaceAll('.', '')
+                        .replaceAll(',', '.'),
+                    ) >= Number.parseFloat(getValues('coin').min_amount) ||
+                    `El importe mínimo para la moneda seleccionada es ${formatCurrency(getValues('coin').min_amount)}.`,
+                  maxValue: value =>
+                    Number.parseFloat(
+                      (value as string)
+                        .replaceAll('.', '')
+                        .replaceAll(',', '.'),
+                    ) <= Number.parseFloat(getValues('coin').max_amount) ||
+                    `El importe máximo para la moneda seleccionada es ${formatCurrency(getValues('coin').max_amount)}.`,
+                },
+              })}
             />
 
             <Select
               label="Seleccionar moneda"
-              image={getValues().coin.image}
+              image={getValues('coin').image}
+              error={
+                filteredCoins.length === 0
+                  ? 'No hay criptomonedas disponibles para el importe informado.'
+                  : formState.errors.coin?.message
+              }
               onClick={handleShowCoinSelector}
-              {...registerWithInnerRef('coin.name', { required: true })}
+              {...registerWithInnerRef('coin.name', {
+                required: 'Campo obligatorio.',
+              })}
+              disabled={filteredCoins.length === 0}
             />
 
             <Input
               label="Concepto"
               placeholder="Añade descripción del pago"
-              {...registerWithInnerRef('description', { required: true })}
+              error={formState.errors.description?.message}
+              {...registerWithInnerRef('description', {
+                required: 'Campo obligatorio.',
+              })}
             />
 
             <Button type="submit" disabled={!formState.isValid}>
@@ -121,8 +176,8 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
           </Form>
         ) : (
           <SelectCoin
-            coins={coins}
-            selectCoin={getValues().coin.name}
+            coins={filteredCoins}
+            selectCoin={getValues('coin').name}
             changeItem={handleItemCoinSelector}
             closeComponent={handleShowCoinSelector}
           />
