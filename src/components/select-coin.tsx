@@ -1,21 +1,21 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FiX, FiChevronRight, FiSearch } from 'react-icons/fi';
 import { FaCircleCheck } from 'react-icons/fa6';
 import Image from 'next/image';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { type ICoinProps } from '../pages/index';
+
+import Input from './input';
 
 import {
   Container,
   Header,
-  Form,
   Title,
   Coins,
   Coin,
   CoinName,
 } from '../styles/components/SelectCoin';
-import Input from './input';
 
 interface ISelectCoinProps {
   coins: ICoinProps[];
@@ -34,7 +34,8 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
   changeItem,
   closeComponent,
 }) => {
-  const { handleSubmit, register } = useForm<IFormData>({
+  const [filteredCoins, setFilteredCoins] = useState(coins);
+  const { register } = useForm<IFormData>({
     defaultValues: {
       search: '',
     },
@@ -48,11 +49,17 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
     [register],
   );
 
-  const handleSubmitForm: SubmitHandler<IFormData> = useCallback(
-    async (data: IFormData) => {
-      console.log(data);
+  const handleFilterCoins = useCallback(
+    (event: React.FormEvent<HTMLInputElement>) => {
+      setFilteredCoins(
+        coins.filter(coin =>
+          coin.name
+            .toLowerCase()
+            .includes(event.currentTarget.value.toLowerCase()),
+        ),
+      );
     },
-    [],
+    [coins],
   );
 
   const handleCloseComponent = useCallback(() => {
@@ -76,15 +83,16 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
         </button>
       </Header>
 
-      <Form onSubmit={handleSubmit(handleSubmitForm)}>
-        <Input
-          icon={FiSearch}
-          {...registerWithInnerRef('search', { required: true })}
-        />
-      </Form>
+      <Input
+        icon={FiSearch}
+        {...registerWithInnerRef('search', {
+          required: true,
+          onChange: handleFilterCoins,
+        })}
+      />
 
       <Coins>
-        {coins.map(coin => (
+        {filteredCoins.map(coin => (
           <Coin
             key={coin.name}
             onClick={async () => {
