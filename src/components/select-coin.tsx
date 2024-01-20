@@ -90,9 +90,10 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
           required: true,
           onChange: handleFilterCoins,
         })}
+        disabled={coins.length === 0}
       />
 
-      {filteredCoins.length !== 0 ? (
+      {coins.length !== 0 && filteredCoins.length !== 0 && (
         <Coins>
           {filteredCoins.map(coin => (
             <Coin
@@ -122,7 +123,16 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
             </Coin>
           ))}
         </Coins>
-      ) : (
+      )}
+
+      {coins.length !== 0 && filteredCoins.length === 0 && (
+        <Message>
+          <FiAlertTriangle size={16} />
+          No hay criptomonedas con el nombre informado.
+        </Message>
+      )}
+
+      {coins.length === 0 && (
         <Message>
           <FiAlertTriangle size={16} />
           No hay criptomonedas disponibles para el importe informado.
