@@ -149,16 +149,11 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
             <Select
               label="Seleccionar moneda"
               image={getValues('coin').image}
-              error={
-                filteredCoins.length === 0
-                  ? 'No hay criptomonedas disponibles para el importe informado.'
-                  : formState.errors.coin?.message
-              }
+              error={formState.errors.coin?.message}
               onClick={handleShowCoinSelector}
               {...registerWithInnerRef('coin.name', {
                 required: 'Campo obligatorio.',
               })}
-              disabled={filteredCoins.length === 0}
             />
 
             <Input

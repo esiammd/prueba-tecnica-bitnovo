@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { FiX, FiChevronRight, FiSearch } from 'react-icons/fi';
+import { FiX, FiChevronRight, FiSearch, FiAlertTriangle } from 'react-icons/fi';
 import { FaCircleCheck } from 'react-icons/fa6';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
@@ -15,6 +15,7 @@ import {
   Coins,
   Coin,
   CoinName,
+  Message,
 } from '../styles/components/SelectCoin';
 
 interface ISelectCoinProps {
@@ -91,30 +92,42 @@ const SelectCoin: React.FC<ISelectCoinProps> = ({
         })}
       />
 
-      <Coins>
-        {filteredCoins.map(coin => (
-          <Coin
-            key={coin.name}
-            onClick={async () => {
-              await handleCoinSelected(coin);
-            }}
-          >
-            <CoinName>
-              <Image src={coin.image} alt={coin.name} width={32} height={32} />
-              <div>
-                <span>{coin.name}</span>
-                <span>{coin.symbol}</span>
-              </div>
-            </CoinName>
+      {filteredCoins.length !== 0 ? (
+        <Coins>
+          {filteredCoins.map(coin => (
+            <Coin
+              key={coin.name}
+              onClick={async () => {
+                await handleCoinSelected(coin);
+              }}
+            >
+              <CoinName>
+                <Image
+                  src={coin.image}
+                  alt={coin.name}
+                  width={32}
+                  height={32}
+                />
+                <div>
+                  <span>{coin.name}</span>
+                  <span>{coin.symbol}</span>
+                </div>
+              </CoinName>
 
-            {coin.name === selectCoin ? (
-              <FaCircleCheck size={16} color="#71B0FD" />
-            ) : (
-              <FiChevronRight size={16} color="#647184" />
-            )}
-          </Coin>
-        ))}
-      </Coins>
+              {coin.name === selectCoin ? (
+                <FaCircleCheck size={16} color="#71B0FD" />
+              ) : (
+                <FiChevronRight size={16} color="#647184" />
+              )}
+            </Coin>
+          ))}
+        </Coins>
+      ) : (
+        <Message>
+          <FiAlertTriangle size={16} />
+          No hay criptomonedas disponibles para el importe informado.
+        </Message>
+      )}
     </Container>
   );
 };

@@ -102,3 +102,14 @@ export const CoinName = styled.div`
     color: #647184;
   }
 `;
+
+export const Message = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #647184;
+
+  svg {
+    margin-right: 4px;
+  }
+`;
