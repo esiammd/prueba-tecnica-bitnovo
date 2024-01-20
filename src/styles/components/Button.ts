@@ -1,6 +1,14 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.button`
+interface IContainer {
+  $isLoading: boolean;
+}
+
+export const Container = styled.button<IContainer>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: #035ac5;
   height: 56px;
   border-radius: 6px;
@@ -19,5 +27,22 @@ export const Container = styled.button`
     background: #c6dffe;
     opacity: 1;
     cursor: auto;
+  }
+
+  ${props =>
+    props.$isLoading &&
+    css`
+      background: #c6dffe;
+    `}
+`;
+
+export const Loading = styled.div`
+  display: flex;
+  animation: is-rotating 1s infinite;
+
+  @keyframes is-rotating {
+    to {
+      transform: rotate(1turn);
+    }
   }
 `;
