@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 673px;
+  height: 588px;
   display: flex;
   flex-direction: column;
   padding: 32px;
@@ -38,8 +39,6 @@ export const Header = styled.div`
   }
 `;
 
-export const Form = styled.form``;
-
 export const Title = styled.span`
   font-size: 18px;
   font-weight: 700;
@@ -62,7 +61,10 @@ export const Search = styled.div`
   }
 `;
 
-export const Coins = styled.ul``;
+export const Coins = styled.ul`
+  height: 100%;
+  overflow-y: auto;
+`;
 
 export const Coin = styled.li`
   display: flex;
