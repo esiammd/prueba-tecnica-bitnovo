@@ -61,8 +61,10 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
   );
 
   const handleShowCoinSelector = useCallback(() => {
-    setShowCoinSelector(!showCoinSelector);
-  }, [showCoinSelector]);
+    if (!isLoading) {
+      setShowCoinSelector(!showCoinSelector);
+    }
+  }, [isLoading, showCoinSelector]);
 
   const handleItemCoinSelector = useCallback(
     (coin: ICoinProps) => {
@@ -150,6 +152,7 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
                     `El importe máximo para la moneda seleccionada es ${formatCurrency(getValues('coin').max_amount)}.`,
                 },
               })}
+              disabled={isLoading}
             />
 
             <Select
@@ -160,6 +163,7 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
               {...registerWithInnerRef('coin.name', {
                 required: 'Campo obligatorio.',
               })}
+              disabled={isLoading}
             />
 
             <Input
@@ -169,6 +173,7 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
               {...registerWithInnerRef('description', {
                 required: 'Campo obligatorio.',
               })}
+              disabled={isLoading}
             />
 
             <Button
