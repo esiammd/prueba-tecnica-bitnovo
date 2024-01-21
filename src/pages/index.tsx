@@ -103,11 +103,18 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
 
   const handleSubmitForm: SubmitHandler<IFormData> = useCallback(
     async (data: IFormData) => {
-      console.log(data);
+      setIsLoading(true);
+      const response = await api.post('/orders/', {
+        expected_output_amount: parseCurrency(data.amount),
+        input_currency: data.coin.symbol,
+        notes: data.description,
+      });
+      setIsLoading(false);
+
       router.push(
         {
           pathname: '/checkout',
-          query: { order: JSON.stringify(data) },
+          query: { order: JSON.stringify(response.data) },
         },
         '/checkout',
       );
