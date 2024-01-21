@@ -53,7 +53,6 @@ export const QRCode = styled.div`
 
 export const Type = styled.div<ITypeProps>`
   display: flex;
-  font-size: 14px;
   margin-bottom: 32px;
 
   button:first-child {
@@ -117,27 +116,27 @@ export const Send = styled.span`
   align-items: center;
 
   span {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
   }
 
   strong {
     font-size: 20px;
+    font-weight: 700;
     margin: 0px 8px;
   }
 `;
 
-export const Key = styled.span`
+export const Address = styled.span`
   display: flex;
   align-items: start;
   margin: 12px 0px;
 
   span {
-    width: 390px;
+    max-width: 390px;
     margin-right: 8px;
 
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 14px;
     text-align: center;
     word-break: break-word;
 
@@ -153,6 +152,7 @@ export const Tag = styled.span`
 
   span {
     margin: 0px 8px;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 600;
   }
 `;
