@@ -76,7 +76,7 @@ export const Business = styled.div`
   }
 `;
 
-export const Trade = styled.div`
+export const Merchant = styled.div`
   span:first-child {
     font-weight: 700;
   }
@@ -87,7 +87,7 @@ export const Trade = styled.div`
   }
 `;
 
-export const Date = styled.div`
+export const PaymentCreationDate = styled.div`
   margin-top: 32px;
 
   span:first-child {
