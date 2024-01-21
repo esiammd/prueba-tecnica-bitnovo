@@ -11,7 +11,7 @@ import {
   ContentTitle,
   Title,
   Info,
-  InputContent,
+  ContentInput,
   Error,
 } from '../styles/components/Select';
 import Image from 'next/image';
@@ -55,7 +55,7 @@ const Select: React.FC<IInputProps> = ({
         </Info>
       </ContentTitle>
 
-      <InputContent
+      <ContentInput
         $isFocused={isFocused}
         $isError={!!error}
         $isDisabled={!!disabled}
@@ -70,7 +70,7 @@ const Select: React.FC<IInputProps> = ({
         />
 
         <FiChevronDown size={16} color="#647184" />
-      </InputContent>
+      </ContentInput>
 
       {error && <Error>* {error}</Error>}
     </Container>
