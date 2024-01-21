@@ -11,7 +11,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.span`
-  size: 14px;
+  font-size: 14px;
   font-weight: 700;
   color: #002859;
 `;
