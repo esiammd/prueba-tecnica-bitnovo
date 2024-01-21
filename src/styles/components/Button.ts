@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface IContainer {
-  $isLoading: boolean;
+  $isLoading?: boolean;
 }
 
 export const Container = styled.button<IContainer>`
