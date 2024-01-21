@@ -28,6 +28,7 @@ const Select: React.FC<IInputProps> = ({
   image,
   error,
   innerRef,
+  disabled,
   ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -54,7 +55,11 @@ const Select: React.FC<IInputProps> = ({
         </Info>
       </ContentTitle>
 
-      <InputContent $isFocused={isFocused} $isError={!!error}>
+      <InputContent
+        $isFocused={isFocused}
+        $isError={!!error}
+        $isDisabled={!!disabled}
+      >
         <Image src={image} alt="Icono" width={20} height={20} />
 
         <input

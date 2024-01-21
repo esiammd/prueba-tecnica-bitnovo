@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 interface IInputContentProps {
   $isFocused: boolean;
   $isError: boolean;
+  $isDisabled: boolean;
 }
 
 export const Container = styled.div`
@@ -99,7 +100,7 @@ export const InputContent = styled.div<IInputContentProps>`
     css`
       border-color: #002859;
       svg {
-        color: #002859;
+        color: #002859 !important;
       }
     `}
 
@@ -117,6 +118,20 @@ export const InputContent = styled.div<IInputContentProps>`
 
       &:hover input {
         cursor: default;
+      }
+    `}
+
+  ${props =>
+    props.$isDisabled &&
+    css`
+      border-color: #e5e9f2;
+      svg {
+        color: #647184 !important;
+      }
+
+      cursor: default !important;
+      input {
+        cursor: default !important;
       }
     `}
 `;
