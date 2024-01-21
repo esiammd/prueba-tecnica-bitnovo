@@ -115,6 +115,7 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
 
       router.push({
         pathname: `/checkout/${response.data.identifier}`,
+        query: { payment_uri: response.data.payment_uri },
       });
     },
     [router],
