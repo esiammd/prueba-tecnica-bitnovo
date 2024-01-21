@@ -108,15 +108,15 @@ export const InputContent = styled.div<IInputContentProps>`
     css`
       border-color: #c53030;
       svg {
-        color: #c53030;
+        color: #c53030 !important;
       }
 
       &:hover {
-        cursor: not-allowed;
+        cursor: default;
       }
 
       &:hover input {
-        cursor: not-allowed;
+        cursor: default;
       }
     `}
 `;
