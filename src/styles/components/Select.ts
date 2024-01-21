@@ -17,6 +17,7 @@ export const ContentTitle = styled.div`
 `;
 
 export const Title = styled.span`
+  min-width: max-content;
   font-size: 14px;
   font-weight: 700;
   color: #002859;
