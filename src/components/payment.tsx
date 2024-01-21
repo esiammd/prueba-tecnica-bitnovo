@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import Image from 'next/image';
 
+import ButtonCopy from './button-copy';
+
 import {
   Container,
   Title,
@@ -11,15 +13,34 @@ import {
   QRCodeImg,
   Data,
   Send,
-  Key,
+  Address,
   Tag,
 } from '../styles/components/Payment';
 
-const Payment: React.FC = () => {
+export interface IPaymentProps {
+  expectedAmount: {
+    value: number;
+    fiat: string;
+  };
+  address: string;
+  destinationTag: string;
+}
+
+const Payment: React.FC<IPaymentProps> = ({
+  expectedAmount,
+  address,
+  destinationTag,
+}) => {
   const [qrCodeType, setQrCodeType] = useState('smart');
 
   const handleQRCodeType = useCallback((type: string) => {
     setQrCodeType(type);
+  }, []);
+
+  const handleCopyText = useCallback(async (text: string) => {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(text);
+    }
   }, []);
 
   return (
@@ -29,7 +50,7 @@ const Payment: React.FC = () => {
       <Content>
         <Timer>
           <Image src="/icons/timer.svg" alt="reloj" width={24} height={24} />
-          05:08
+          05:08 (FALTA)
         </Timer>
 
         <QRCode>
@@ -58,27 +79,39 @@ const Payment: React.FC = () => {
         <Data>
           <Send>
             <span>Enviar</span>
-            <strong>108,02 XRP</strong>
-            <Image src="/icons/copy.svg" alt="copiar" width={18} height={18} />
+            <strong>{`${expectedAmount.value.toFixed(2).replace('.', ',')} ${expectedAmount.fiat}`}</strong>
+            <ButtonCopy
+              onClick={() => {
+                handleCopyText(expectedAmount.value.toString());
+              }}
+            />
           </Send>
 
-          <Key>
-            <span>
-              Xp4Lw2PtQgB7RmedTak143LrXp4Lw2PtQgB7RmedEV731CdTak143LrXp4L
-            </span>
-            <Image src="/icons/copy.svg" alt="copiar" width={18} height={18} />
-          </Key>
-
-          <Tag>
-            <Image
-              src="/icons/warning.svg"
-              alt="advertencia"
-              width={24}
-              height={24}
+          <Address>
+            <span>{address}</span>
+            <ButtonCopy
+              onClick={() => {
+                handleCopyText(address);
+              }}
             />
-            <span>Etiqueta de destino: 2557164061</span>
-            <Image src="/icons/copy.svg" alt="copiar" width={18} height={18} />
-          </Tag>
+          </Address>
+
+          {destinationTag && (
+            <Tag>
+              <Image
+                src="/icons/warning.svg"
+                alt="advertencia"
+                width={24}
+                height={24}
+              />
+              <span>Etiqueta de destino: {destinationTag}</span>
+              <ButtonCopy
+                onClick={() => {
+                  handleCopyText(destinationTag);
+                }}
+              />
+            </Tag>
+          )}
         </Data>
       </Content>
     </Container>

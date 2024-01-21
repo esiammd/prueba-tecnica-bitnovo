@@ -1,6 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 
+import formatCurrency from '../utils/formatCurrency';
+import formatDate from '../utils/formatDate';
+
 import {
   Container,
   Title,
@@ -8,12 +11,32 @@ import {
   Amount,
   Coin,
   Business,
-  Trade,
-  Date,
+  Merchant,
+  PaymentCreationDate,
   Description,
 } from '../styles/components/Summary';
 
-const Summary: React.FC = () => {
+export interface ISummaryProps {
+  amount: {
+    value: number;
+    fiat: string;
+  };
+  coin: {
+    image: string;
+    symbol: string;
+  };
+  merchant: string;
+  createdAt: string;
+  description: string;
+}
+
+const Summary: React.FC<ISummaryProps> = ({
+  amount,
+  coin,
+  merchant,
+  createdAt,
+  description,
+}) => {
   return (
     <Container>
       <Title>Resumen del pedido</Title>
@@ -21,24 +44,19 @@ const Summary: React.FC = () => {
       <Content>
         <Amount>
           <span>Importe:</span>
-          <span>56,06 EUR</span>
+          <span>{`${formatCurrency(amount.value.toString())} ${amount.fiat}`}</span>
         </Amount>
 
         <Coin>
           <span>Moneda seleccionada:</span>
           <span>
-            <Image
-              src="/coins/ripple.svg"
-              alt="Icono de Moneda"
-              width={20}
-              height={20}
-            />
-            XRP
+            <Image src={coin.image} alt={coin.symbol} width={20} height={20} />
+            {coin.symbol}
           </span>
         </Coin>
 
         <Business>
-          <Trade>
+          <Merchant>
             <span>Comercio:</span>
             <span>
               <Image
@@ -47,19 +65,19 @@ const Summary: React.FC = () => {
                 width={24}
                 height={24}
               />
-              Comercio de pruebas de Semega
+              {merchant}
             </span>
-          </Trade>
+          </Merchant>
 
-          <Date>
+          <PaymentCreationDate>
             <span>Fecha:</span>
-            <span>21/01/2022 08:52</span>
-          </Date>
+            <span>{formatDate(createdAt)}</span>
+          </PaymentCreationDate>
         </Business>
 
         <Description>
           <span>Concepto:</span>
-          <span>Viajes & Ocio</span>
+          <span>{description}</span>
         </Description>
       </Content>
     </Container>

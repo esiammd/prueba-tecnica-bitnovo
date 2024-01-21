@@ -113,13 +113,9 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
       });
       setIsLoading(false);
 
-      router.push(
-        {
-          pathname: '/checkout',
-          query: { order: JSON.stringify(response.data) },
-        },
-        '/checkout',
-      );
+      router.push({
+        pathname: `/checkout/${response.data.identifier}`,
+      });
     },
     [router],
   );
