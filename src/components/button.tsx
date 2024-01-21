@@ -4,7 +4,7 @@ import { FiLoader } from 'react-icons/fi';
 import { Container, Loading } from '../styles/components/Button';
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 const Button: React.FC<IButtonProps> = ({ isLoading, children, ...rest }) => (
