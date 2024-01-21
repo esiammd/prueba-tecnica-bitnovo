@@ -9,7 +9,7 @@ import { type IconBaseProps } from 'react-icons';
 import {
   Container,
   Title,
-  InputContent,
+  ContentInput,
   Error,
 } from '../styles/components/Input';
 
@@ -41,7 +41,7 @@ const Input: React.FC<IInputProps> = ({
     <Container>
       <Title>{label}</Title>
 
-      <InputContent $isFocused={isFocused} $isError={!!error}>
+      <ContentInput $isFocused={isFocused} $isError={!!error}>
         {Icon && <Icon size={20} color={isFocused ? '#002859' : '#647184'} />}
 
         <input
@@ -50,7 +50,7 @@ const Input: React.FC<IInputProps> = ({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
         />
-      </InputContent>
+      </ContentInput>
 
       {error && <Error>* {error}</Error>}
     </Container>
