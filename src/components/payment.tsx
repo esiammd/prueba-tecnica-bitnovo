@@ -56,13 +56,10 @@ const Payment: React.FC<IPaymentProps> = ({
   }, [status, expiredTime, router]);
 
   useEffect(() => {
-    if (
-      ['EX', 'OC'].includes(status) ||
-      new Date().valueOf() > new Date(expiredTime).valueOf()
-    ) {
+    if (['EX', 'OC'].includes(status) || countdownValue === '0:00') {
       router.push('/canceled');
     }
-  }, [status, expiredTime, router]);
+  }, [status, expiredTime, countdownValue, router]);
 
   return (
     <Container>

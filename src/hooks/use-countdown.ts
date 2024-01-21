@@ -30,7 +30,7 @@ const useCountdown = (expirationDate: Date) => {
     };
   }, [getRemainingTime]);
 
-  return remainingTime > 0 ? `${minutesValue}:${secondsValue}` : 'Time expired';
+  return `${minutesValue}:${secondsValue}`;
 };
 
 export default useCountdown;
