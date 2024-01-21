@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-interface IInputContentProps {
+interface IContentInputProps {
   $isFocused: boolean;
   $isError: boolean;
   $isDisabled: boolean;
@@ -57,7 +57,7 @@ export const Info = styled.div`
   }
 `;
 
-export const InputContent = styled.div<IInputContentProps>`
+export const ContentInput = styled.div<IContentInputProps>`
   display: flex;
   height: 56px;
   align-items: center;
