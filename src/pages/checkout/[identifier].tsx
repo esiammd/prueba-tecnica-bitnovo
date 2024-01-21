@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import { type GetServerSideProps } from 'next';
 
@@ -21,14 +21,37 @@ interface IOrderProps {
   crypto_amount: number;
   address: string;
   tag_memo: string;
+  expired_time: string;
+  status: string;
 }
 
 interface ICheckoutProps {
+  identifier: string;
   summary: ISummaryProps;
   payment: IPaymentProps;
 }
 
-const Checkout: React.FC<ICheckoutProps> = ({ summary, payment }) => {
+const Checkout: React.FC<ICheckoutProps> = ({
+  identifier,
+  summary,
+  payment,
+}) => {
+  const socket = useRef<WebSocket | null>(null);
+  const [paymentStatus, setPaymentStatus] = useState(payment.status);
+
+  useEffect(() => {
+    socket.current = new WebSocket(
+      `wss://payments.pre-bnvo.com/ws/${identifier}`,
+    );
+    socket.current.addEventListener('message', message => {
+      setPaymentStatus(JSON.parse(message.data as string).status as string);
+    });
+
+    return () => {
+      socket.current?.close();
+    };
+  }, [identifier]);
+
   return (
     <>
       <Head>
@@ -48,6 +71,9 @@ const Checkout: React.FC<ICheckoutProps> = ({ summary, payment }) => {
             expectedAmount={payment.expectedAmount}
             address={payment.address}
             destinationTag={payment.destinationTag}
+            expiredTime={payment.expiredTime}
+            paymentURI={payment.paymentURI}
+            status={paymentStatus}
           />
         </Content>
 
@@ -60,6 +86,8 @@ const Checkout: React.FC<ICheckoutProps> = ({ summary, payment }) => {
 export const getServerSideProps: GetServerSideProps<
   ICheckoutProps
 > = async context => {
+  const { payment_uri } = context.query as Record<string, string>;
+
   const { identifier } = context.params as Record<string, string>;
   const response = await api.get(`/orders/info/${identifier}/`);
   const order: IOrderProps = response.data[0];
@@ -90,10 +118,17 @@ export const getServerSideProps: GetServerSideProps<
     },
     address: order.address,
     destinationTag: order.tag_memo,
+    expiredTime: order.expired_time,
+    paymentURI: payment_uri,
+    status: order.status,
   };
 
   return {
-    props: { summary, payment },
+    props: {
+      identifier,
+      summary,
+      payment,
+    },
   };
 };
 

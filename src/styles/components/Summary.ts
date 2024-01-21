@@ -55,6 +55,7 @@ export const Coin = styled.div`
 
   span {
     display: flex;
+    align-items: center;
     place-content: center;
     font-weight: 700;
   }
@@ -84,6 +85,10 @@ export const Merchant = styled.div`
   span {
     display: flex;
     align-items: center;
+  }
+
+  img {
+    margin-right: 2px;
   }
 `;
 

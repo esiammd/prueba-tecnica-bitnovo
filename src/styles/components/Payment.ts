@@ -1,8 +1,5 @@
-import styled, { css } from 'styled-components';
-
-interface ITypeProps {
-  $qrCodeType: string;
-}
+import { QRCodeSVG } from 'qrcode.react';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 583px;
@@ -51,55 +48,24 @@ export const QRCode = styled.div`
   margin: 32px 0px;
 `;
 
-export const Type = styled.div<ITypeProps>`
+export const Type = styled.span`
   display: flex;
   margin-bottom: 32px;
+  padding: 6px 12px;
+  height: 32px;
 
-  button:first-child {
-    margin-right: 16px;
-  }
+  background: #035ac5;
+  border-radius: 100px;
+  border: none;
 
-  button {
-    width: auto;
-    height: 32px;
-    padding: 6px 12px;
-    border-radius: 100px;
-    border: none;
-
-    font-size: 16px;
-    background: #f9fafc;
-    color: #647184;
-
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-
-  .smart {
-    ${props =>
-      props.$qrCodeType === 'smart' &&
-      css`
-        background: #035ac5;
-        color: #fff;
-      `}
-  }
-
-  .web {
-    ${props =>
-      props.$qrCodeType === 'web' &&
-      css`
-        background: #035ac5;
-        color: #fff;
-      `}
-  }
+  font-size: 16px;
+  color: #fff;
 `;
 
-export const QRCodeImg = styled.div`
+export const QRCodeImg = styled(QRCodeSVG)`
   width: 193px;
   height: 193px;
   border-radius: 10px;
-
-  background-color: black;
 `;
 
 export const Data = styled.div`
