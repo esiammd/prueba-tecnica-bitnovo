@@ -5,6 +5,8 @@ import Head from 'next/head';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import formatCurrency from '../utils/formatCurrency';
+import parseCurrency from '../utils/parseCurrency';
+
 import api from '../services/api';
 
 import Input from '../components/input';
@@ -44,6 +46,8 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
         description: '',
       },
     });
+
+  const [isLoading, setIsLoading] = useState(false);
   const [showCoinSelector, setShowCoinSelector] = useState(false);
   const [filteredCoins, setFilteredCoins] = useState(coins);
   const router = useRouter();
@@ -130,18 +134,12 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
                 onChange: handleAmountChange,
                 validate: {
                   minValue: value =>
-                    Number.parseFloat(
-                      (value as string)
-                        .replaceAll('.', '')
-                        .replaceAll(',', '.'),
-                    ) >= Number.parseFloat(getValues('coin').min_amount) ||
+                    parseCurrency(value as string) >=
+                      Number.parseFloat(getValues('coin').min_amount) ||
                     `El importe mínimo para la moneda seleccionada es ${formatCurrency(getValues('coin').min_amount)}.`,
                   maxValue: value =>
-                    Number.parseFloat(
-                      (value as string)
-                        .replaceAll('.', '')
-                        .replaceAll(',', '.'),
-                    ) <= Number.parseFloat(getValues('coin').max_amount) ||
+                    parseCurrency(value as string) <=
+                      Number.parseFloat(getValues('coin').max_amount) ||
                     `El importe máximo para la moneda seleccionada es ${formatCurrency(getValues('coin').max_amount)}.`,
                 },
               })}
@@ -166,7 +164,11 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
               })}
             />
 
-            <Button type="submit" disabled={!formState.isValid}>
+            <Button
+              type="submit"
+              disabled={!formState.isValid || isLoading}
+              isLoading={isLoading}
+            >
               Continuar
             </Button>
           </Form>
@@ -186,7 +188,7 @@ const Home: React.FC<IHomeProps> = ({ coins }) => {
 };
 
 export const getStaticProps: GetStaticProps<IHomeProps> = async () => {
-  const response = await api.get('/currencies');
+  const response = await api.get('/currencies/');
 
   return {
     props: {
