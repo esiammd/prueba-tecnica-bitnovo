@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-interface IInputContentProps {
+interface IContentInputProps {
   $isFocused: boolean;
   $isError: boolean;
 }
@@ -16,7 +16,7 @@ export const Title = styled.span`
   color: #002859;
 `;
 
-export const InputContent = styled.div<IInputContentProps>`
+export const ContentInput = styled.div<IContentInputProps>`
   display: flex;
   background: #fff;
   border-radius: 10px;
