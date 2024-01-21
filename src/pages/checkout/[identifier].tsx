@@ -48,7 +48,9 @@ const Checkout: React.FC<ICheckoutProps> = ({
     });
 
     return () => {
-      socket.current?.close();
+      if (socket.current?.readyState === 1) {
+        socket.current?.close();
+      }
     };
   }, [identifier]);
 
