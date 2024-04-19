@@ -89,7 +89,7 @@ const Payment: React.FC<IPaymentProps> = ({
           </Send>
 
           <Address>
-            <span>{address}</span>
+            <small>{address}</small>
             <ButtonCopy
               onClick={() => {
                 handleCopyText(address);
@@ -105,7 +105,7 @@ const Payment: React.FC<IPaymentProps> = ({
                 width={24}
                 height={24}
               />
-              <span>Etiqueta de destino: {destinationTag}</span>
+              <small>Etiqueta de destino: {destinationTag}</small>
               <ButtonCopy
                 onClick={() => {
                   handleCopyText(destinationTag);

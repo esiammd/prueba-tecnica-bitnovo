@@ -77,7 +77,7 @@ export const Data = styled.div`
   color: #002859;
 `;
 
-export const Send = styled.span`
+export const Send = styled.div`
   display: flex;
   align-items: center;
 
@@ -93,16 +93,15 @@ export const Send = styled.span`
   }
 `;
 
-export const Address = styled.span`
+export const Address = styled.div`
   display: flex;
   align-items: start;
-  margin: 12px 0px;
+  margin-top: -12px;
 
-  span {
+  small {
     max-width: 390px;
     margin-right: 8px;
 
-    font-size: 14px;
     text-align: center;
     word-break: break-word;
 
@@ -115,10 +114,10 @@ export const Address = styled.span`
 export const Tag = styled.span`
   display: flex;
   align-items: center;
+  margin-top: 12px;
 
-  span {
+  small {
     margin: 0px 8px;
-    font-size: 12px;
     font-weight: 600;
   }
 `;

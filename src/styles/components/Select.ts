@@ -26,6 +26,7 @@ export const Title = styled.span`
 export const Info = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 
   svg {
     margin-left: 4px;
@@ -36,10 +37,10 @@ export const Info = styled.div`
   }
 
   span {
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
     width: 180px;
-    position: fixed;
-    margin-bottom: 64px;
-    margin-left: 16px;
 
     background-color: #fff;
     border: 1px solid #647184;
