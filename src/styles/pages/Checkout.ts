@@ -15,7 +15,8 @@ export const Content = styled.div`
   @media (max-width: 1300px) {
     height: calc(100vh - 200px);
     padding: 20px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
 

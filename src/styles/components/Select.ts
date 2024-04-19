@@ -36,25 +36,25 @@ export const Info = styled.div`
   }
 
   span {
+    width: 180px;
+    position: fixed;
+    margin-bottom: 64px;
+    margin-left: 16px;
+
+    background-color: #fff;
     border: 1px solid #647184;
     border-radius: 4px 4px 4px 0px;
     padding: 4px;
-
-    position: relative;
-    top: -18px;
 
     font-size: 12px;
     font-weight: 400;
     color: #647184;
 
-    opacity: 0;
-    transition: opacity 0.4s;
-    visibility: hidden;
+    display: none;
   }
 
   &:hover span {
-    opacity: 1;
-    visibility: visible;
+    display: block;
   }
 `;
 

@@ -38,6 +38,6 @@ export const Form = styled.form`
   }
 
   @media (max-width: 650px) {
-    width: auto;
+    width: 86%;
   }
 `;

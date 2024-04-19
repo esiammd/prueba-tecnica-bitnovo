@@ -8,7 +8,8 @@ export const Container = styled.div`
 
   position: absolute;
   bottom: 0;
-  margin-bottom: 32px;
+  padding: 32px 0px;
+  background: #fff;
 
   span {
     font-size: 12px;
